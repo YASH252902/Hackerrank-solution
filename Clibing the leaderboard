@@ -1,0 +1,48 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n; // Number of leaderboard scores
+    cin >> n;
+    vector<int> scores(n);
+    for (int i = 0; i < n; i++) cin >> scores[i];
+
+    // Remove duplicates from scores to get distinct ranks
+    vector<int> distinctScores;
+    distinctScores.push_back(scores[0]);
+    for (int i = 1; i < n; i++) {
+        if (scores[i] != scores[i - 1]) {
+            distinctScores.push_back(scores[i]);
+        }
+    }
+
+    int m; // Number of Alice's scores
+    cin >> m;
+    vector<int> alice(m);
+    for (int i = 0; i < m; i++) cin >> alice[i];
+
+    int len = distinctScores.size();
+
+    for (int i = 0; i < m; i++) {
+        int score = alice[i];
+
+        // Binary search to find the rank
+        int low = 0, high = len - 1;
+        int pos = len;  // default position if Alice's score is less than all leaderboard scores
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (distinctScores[mid] <= score) {
+                pos = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+
+        // Rank is position + 1 because ranks are 1-based
+        cout << pos + 1 << "\n";
+    }
+
+    return 0;
+}
