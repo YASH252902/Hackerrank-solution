@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n;  // number of orders
+    cin >> n;
+
+    vector<pair<int, int>> orders;  // pair: (completion_time, order_number)
+    for (int i = 1; i <= n; i++) {
+        int order_time, prep_time;
+        cin >> order_time >> prep_time;
+        int completion_time = order_time + prep_time;
+        orders.push_back({completion_time, i});
+    }
+
+    // Sort by completion time, then by order number
+    sort(orders.begin(), orders.end());
+
+    for (auto &order : orders) {
+        cout << order.second << " ";
+    }
+    cout << "\n";
+
+    return 0;
+}
