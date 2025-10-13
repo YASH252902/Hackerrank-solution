@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n, k;
+    cin >> n >> k;
+    vector<int> houses(n);
+    for (int i = 0; i < n; i++) {
+        cin >> houses[i];
+    }
+
+    int count = 0;    // number of generators used
+    int i = 0;        // current house to cover
+
+    while (i < n) {
+        // Find the rightmost generator in the range [i, i+k-1] that can cover the current house
+        int generator_pos = -1;
+        int right_limit = min(i + k - 1, n - 1);
+
+        // Search from right_limit down to max(i - k + 1, 0)
+        int left_limit = max(i - k + 1, 0);
+
+        for (int j = right_limit; j >= left_limit; j--) {
+            if (houses[j] == 1) {
+                generator_pos = j;
+                break;
+            }
+        }
+
+        if (generator_pos == -1) {
+            cout << -1 << "\n";  // No generator found to cover current house
+            return 0;
+        }
+
+        count++;
+        // Next house to cover is right after the coverage of this generator
+        i = generator_pos + k;
+    }
+
+    cout << count << "\n";
+    return 0;
+}
