@@ -1,0 +1,26 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+
+int main() {
+    string s;
+    cin >> s;
+    long long n = s.size();
+
+    // dp[i] will store sum of all substrings ending at index i
+    vector<long long> dp(n);
+    dp[0] = s[0] - '0';
+
+    long long result = dp[0];
+
+    for (int i = 1; i < n; i++) {
+        int num = s[i] - '0';
+        dp[i] = ( (dp[i-1] * 10) % MOD + (num * (i + 1)) % MOD ) % MOD;
+        result = (result + dp[i]) % MOD;
+    }
+
+    cout << result << "\n";
+
+    return 0;
+}
