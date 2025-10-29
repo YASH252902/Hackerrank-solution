@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
+    int t;
+    if (!(cin >> t)) return 0;
+    while (t--) {
+        int R, C;
+        cin >> R >> C;
+        vector<string> G(R);
+        for (int i = 0; i < R; ++i) cin >> G[i];
+
+        int r, c;
+        cin >> r >> c;
+        vector<string> P(r);
+        for (int i = 0; i < r; ++i) cin >> P[i];
+
+        bool found = false;
+        
+        for (int i = 0; i <= R - r && !found; ++i) {
+            
+            size_t start = 0;
+            while (true) {
+                size_t pos = G[i].find(P[0], start);
+                if (pos == string::npos) break;
+                
+                bool ok = true;
+                for (int k = 1; k < r; ++k) {
+                    
+                    if (pos + c > G[i+k].size() || G[i+k].compare(pos, c, P[k]) != 0) {
+                        ok = false;
+                        break;
+                    }
+                }
+                if (ok) { found = true; break; }
+                start = pos + 1; 
+            }
+        }
+
+        cout << (found ? "YES" : "NO") << '\n';
+    }
+
+    return 0;
+}
