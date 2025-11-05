@@ -1,0 +1,48 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int g;
+    cin >> g; 
+    while (g--) {
+        int n, m, x;
+        cin >> n >> m >> x;
+        vector<int> a(n), b(m);
+        for (int i = 0; i < n; i++) cin >> a[i];
+        for (int i = 0; i < m; i++) cin >> b[i];
+
+        long long sum = 0;
+        int countA = 0, maxCount = 0;
+
+        
+        while (countA < n && sum + a[countA] <= x) {
+            sum += a[countA];
+            countA++;
+        }
+
+        maxCount = countA;
+
+        
+        for (int countB = 0; countB < m; countB++) {
+            sum += b[countB];
+
+            
+            while (sum > x && countA > 0) {
+                countA--;
+                sum -= a[countA];
+            }
+
+            
+            if (sum <= x) {
+                maxCount = max(maxCount, countA + countB + 1);
+            }
+        }
+
+        cout << maxCount << "\n";
+    }
+
+    return 0;
+}
