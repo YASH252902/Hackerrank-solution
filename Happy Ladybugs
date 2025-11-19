@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
+    int g;
+    if (!(cin >> g)) return 0;
+    while (g--) {
+        int n;
+        string s;
+        cin >> n >> s;           
+        vector<int> cnt(26, 0);
+        int underscores = 0;
+        
+        for (char c : s) {
+            if (c == '_') underscores++;
+            else cnt[c - 'A']++;
+        }
+        
+        bool possible = true;
+        if (underscores == 0) {
+            
+            for (int i = 0; i < n; ++i) {
+                bool leftSame  = (i > 0 && s[i] == s[i-1]);
+                bool rightSame = (i+1 < n && s[i] == s[i+1]);
+                if (!leftSame && !rightSame) {
+                    possible = false;
+                    break;
+                }
+            }
+        } else {
+            
+            for (int i = 0; i < 26; ++i) {
+                if (cnt[i] == 1) {
+                    possible = false;
+                    break;
+                }
+            }
+        }
+        
+        cout << (possible ? "YES" : "NO") << '\n';
+    }
+    return 0;
+}
