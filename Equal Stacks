@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n1, n2, n3;
+    if (!(cin >> n1 >> n2 >> n3)) return 0;
+
+    vector<long long> s1(n1), s2(n2), s3(n3);
+    for (int i = 0; i < n1; ++i) cin >> s1[i];
+    for (int i = 0; i < n2; ++i) cin >> s2[i];
+    for (int i = 0; i < n3; ++i) cin >> s3[i];
+
+    // totals (height sums)
+    long long h1 = 0, h2 = 0, h3 = 0;
+    for (auto v : s1) h1 += v;
+    for (auto v : s2) h2 += v;
+    for (auto v : s3) h3 += v;
+
+    
+    int i1 = 0, i2 = 0, i3 = 0;
+
+    while (true) {
+        
+        if (h1 == h2 && h2 == h3) {
+            cout << h1 << '\n';
+            return 0;
+        }
+
+        
+        if (i1 == n1 || i2 == n2 || i3 == n3) {
+            cout << 0 << '\n';
+            return 0;
+        }
+
+        // remove from the tallest stack's top
+        if (h1 >= h2 && h1 >= h3) {
+            h1 -= s1[i1++];
+        } else if (h2 >= h1 && h2 >= h3) {
+            h2 -= s2[i2++];
+        } else { // h3 is largest
+            h3 -= s3[i3++];
+        }
+    }
+
+    return 0;
+}
